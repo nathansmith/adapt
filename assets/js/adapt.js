@@ -21,7 +21,7 @@
   css.id = 'ADAPT_CSS';
 
   // Empty vars to use later.
-  var url, url_old, timer;
+  var tag, url, url_old, timer;
 
   // Adapt to width.
   function adapt() {
@@ -59,9 +59,9 @@
     }
 
     // Was it created yet?
-    if (url_old && url_old !== url) {
+    if (!!tag && url_old !== url) {
       // If so, just set the URL.
-      d.getElementById('ADAPT_CSS').href = url;
+      tag.href = url;
       url_old = url;
     }
     else {
@@ -69,6 +69,7 @@
       css.href = url;
       url_old = url;
       head.appendChild(css);
+      tag = d.getElementById('ADAPT_CSS');
     }
   }
 
