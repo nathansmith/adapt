@@ -99,7 +99,8 @@ code {
 
 pre {
   background: #ffe;
-  border: 1px solid #eed;
+  border: 1px solid;
+  border-color: #eed #ccb #bba #ddc;
   overflow: auto;
   padding: 10px 0 10px 10px;
 }
