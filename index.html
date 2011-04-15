@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width; initial-scale=1" />
+<title>Adapt.js - Adaptive CSS</title>
+<link rel="stylesheet" href="assets/css/master.css" />
+<noscript>
+<link rel="stylesheet" href="assets/css/mobile.css" />
+</noscript>
+<script>
+// Edit to suit your needs.
+var ADAPT_CONFIG = {
+  // Where is your CSS?
+  path: 'assets/css/',
+
+  // false = Only run one time, when page first loads.
+  // true = Change for window resize or page tilt too.
+  dynamic: true,
+
+  // First range entry is the minimum.
+  // Last range entry is the maximum.
+  // Should have at least one "to" range.
+  range: [
+    '760px            = mobile.min.css',
+    '760px  to 960px  = 720.min.css',
+    '960px  to 1280px = 960.min.css',
+    '1280px to 1600px = 1200.min.css',
+    '1600px to 1920px = 1560.min.css',
+    '1920px           = fluid.min.css'
+  ]
+};
+</script>
+<script src="assets/js/adapt.min.js"></script>
+</head>
+<body>
+<div class="container_12 clearfix">
+  <div class="grid_12">
+    <h1>
+      Adapt.js - Adaptive CSS
+    </h1>
+  </div>
+  <div class="clear"></div>
+  <div class="grid_7">
+    <h2>
+      What is this?
+    </h2>
+    <p>
+      <a href="http://github.com/nathansmith/adapt">Adapt.js</a> is a lightweight (940 bytes <a href="assets/js/adapt.min.js">minified</a>) JavaScript file that determines which CSS file to load before the browser renders a page. It is worth noting this is a proposed, not prescribed, approach to a problem with multiple solutions. Other methods include: building a <a href="http://mobify.me/">separate site</a> for mobile, or using a media queries to adjust layouts dynamically, and a <a href="https://github.com/scottjehl/Respond">polyfill</a> for older browser support. Also a factor is how to handle <a href="http://filamentgroup.com/lab/responsive_images_experimenting_with_context_aware_image_sizing/">image</a> resolutions.
+    </p>
+    <p>
+      Adapt.js simply checks the browser width, and serves only the CSS that is needed, when it is needed. A potential drawback of Adapt.js is the possibility of a brief flash of unstyled content as a new stylesheet is being fetched (think of it as "Ajax" for CSS). However, I have done my best to mitigate this by keeping CSS files small (3 KB).
+    </p>
+  </div>
+  <div class="grid_5">
+    <table class="data">
+      <caption>
+        Default CSS Files &amp; Widths
+      </caption>
+      <thead>
+        <tr>
+          <th>
+            File Name
+          </th>
+          <th>
+            Screen Width
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>
+            mobile.css
+          </th>
+          <td>
+            below 480px
+          </td>
+        </tr>
+        <tr>
+          <th>
+            720.css
+          </th>
+          <td>
+            480px to 960px
+          </td>
+        </tr>
+        <tr>
+          <th>
+            960.css
+          </th>
+          <td>
+            960px to 1280px
+          </td>
+        </tr>
+        <tr>
+          <th>
+            1200.css
+          </th>
+          <td>
+            1280px to 1600px
+          </td>
+        </tr>
+        <tr>
+          <th>
+            1560.css
+          </th>
+          <td>
+            1600 to 1920px
+          </td>
+        </tr>
+        <tr>
+          <th>
+            fluid.css
+          </th>
+          <td>
+            above 1920px
+          </td>
+        </tr>
+      </table>
+    </table>
+  </div>
+  <hr class="grid_12">
+  <div class="grid_7">
+<pre>// Edit to suit your needs.
+var ADAPT_CONFIG = {
+  // Where is your CSS?
+  path: 'assets/css/',
+ 
+  // false = Only run one time, when page first loads.
+  // true = Change for window resize or page tilt too.
+  dynamic: true,
+ 
+  // First range entry is the minimum.
+  // Last range entry is the maximum.
+  // Should have at least one "to" range.
+  range: [
+    '760px            = mobile.css',
+    '760px  to 960px  = 720.css',
+    '960px  to 1280px = 960.css',
+    '1280px to 1600px = 1200.css',
+    '1600px to 1920px = 1560.css',
+    '1920px           = fluid.css'
+  ]
+};</pre>
+  </div>
+  <div class="grid_5">
+    <h3>
+      Configuration
+    </h3>
+    <p>
+      To use Adapt.js, all you have to do is set up a few parameters: <code>path</code> is the directory structure in which your stylesheets reside, <code>dynamic</code> is a boolean (<code>true</code> or <code>false</code>) that tells Adapt.js whether to watch for the <code>window</code> to fire <code>resize</code> and <code>orientationchange</code> events. Lastly, <code>range</code> defines the screen widths to associate with various CSS files. The defaults are shown in the adjacent code example.
+    </p>
+    <hr />
+    <h3>
+      Open Source
+    </h3>
+    <p>
+      Just like the <a href="http://960.gs/">960 Grid System</a> itself, Adapt.js is released under <a href="http://www.gnu.org/licenses/gpl.html">GPL</a> and <a href="http://www.opensource.org/licenses/mit-license.php">MIT</a>. This means that it is free as in speech. If you want to use it in a product that is already licensed under the GPL, you can. Or, if you want to use it in a commercial product, you can choose the MIT license instead. No strings attached.
+    </p>
+    <p>
+      You can get the code from the repository on <a href="http://github.com/nathansmith/adapt">GitHub</a>.
+    </p>
+  </div>
+  <hr class="grid_12" />
+  <div class="grid_4">
+    <h4>
+      Fallback
+    </h4>
+    <p>
+      In the case of JavaScript being purposefully disabled or unavailable, stylesheet defaults can be served via <code>&lt;noscript&gt;</code>, which is perfectly valid in the <code>&lt;head&gt;</code> for <a href="http://www.w3.org/TR/html5/scripting-1.html#the-noscript-element">HTML5</a>. Taking a <a href="http://www.lukew.com/ff/entry.asp?933">mobile first</a> approach, I specified the mobile.css file, assuming devices without JS capabilities are likely to be less capable “feature” phones.
+    </p>
+  </div>
+  <div class="grid_4">
+    <h4>
+      Responsive
+    </h4>
+    <p>
+      This whole browser resizing craze was started by none other than the inestimable <a href="http://ethanmarcotte.com/">Ethan Marcotte</a>, when he wrote his seminal article for A List Apart, entitled <a href="http://www.alistapart.com/articles/responsive-web-design/">Responsive Web Design</a>. Since then, some have <a href="http://tripleodeon.com/2010/10/not-a-mobile-web-merely-a-320px-wide-one/">criticized</a> <code>@media</code> queries as <a href="http://www.cloudfour.com/css-media-query-for-mobile-is-fools-gold/">fool's gold</a>, well intentioned but not fully suited to handle the task of a truly <a href="http://adactio.com/journal/1716/">One Web</a> approach.
+    </p>
+  </div>
+  <div class="grid_4">
+    <h4>
+      “It Depends”
+    </h4>
+    <p>
+      As with any area in which technological approaches are open for debate, there is the danger of religious fanaticism, where we each rally behind a respective method and defend it vehemently. I would caution you to weigh the options, consider mobile users, and choose an approach makes sense for you.
+    </p>
+  </div>
+  <hr class="grid_12" />
+  <div class="grid_3">
+    <p>
+      <small>
+        Licensed under <a href="http://www.gnu.org/licenses/gpl.html">GPL</a> and <a href="http://www.opensource.org/licenses/mit-license.php">MIT</a>.
+      </small>
+    </p>
+  </div>
+  <div class="grid_6 align_center">
+    <p>
+      <small>
+        Powered by <a href="assets/js/adapt.js">Adapt.js</a> + <a href="http://960.gs/">960.gs</a>.
+        &nbsp;
+        |
+        &nbsp;
+        Repository at <a href="http://github.com/nathansmith/adapt">GitHub</a>.
+      </small>
+    </p>
+  </div>
+  <div class="grid_3 align_right">
+    <p>
+      <small>
+        Custom grids via <a href="http://grids.heroku.com/">SprySoft</a>.
+      </small>
+    </p>
+  </div>
+</div>
+</body>
+</html>
