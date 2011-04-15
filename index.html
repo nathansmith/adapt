@@ -49,7 +49,7 @@ var ADAPT_CONFIG = {
       <a href="https://github.com/nathansmith/adapt/blob/master/assets/js/adapt.js">Adapt.js</a> is a lightweight (940 bytes <a href="assets/js/adapt.min.js">minified</a>) JavaScript file that determines which CSS file to load before the browser renders a page. It is worth noting this is a proposed, not prescribed, approach to a problem with multiple solutions. Other methods include: building a <a href="http://mobify.me/">separate site</a> for mobile, or using a media queries to adjust layouts dynamically, with a <a href="https://github.com/scottjehl/Respond">polyfill</a> for older browser support. Also a factor is how to handle <a href="http://filamentgroup.com/lab/responsive_images_experimenting_with_context_aware_image_sizing/">image</a> resolutions.
     </p>
     <p>
-      Adapt.js simply checks the browser width, and serves only the CSS that is needed, when it is needed. A potential drawback of Adapt.js is the possibility of a brief flash of unstyled content as a new stylesheet is being fetched (think of it as “Ajax” for CSS). However, I have done my best to mitigate this by keeping CSS files small (3 KB). Once a CSS file is fetched for the first time, it is cached thereafter, not causing any further downloads.
+      Adapt.js simply checks the browser width, and serves only the CSS that is needed, when it is needed. A potential drawback of Adapt.js is the possibility of a brief flash of unstyled content as a new stylesheet is being fetched (think of it as “Ajax” for CSS). I have done my best to mitigate this by keeping CSS files small (3 KB).
     </p>
   </div>
   <div class="grid_5">
@@ -183,7 +183,7 @@ var ADAPT_CONFIG = {
       “It Depends”
     </h4>
     <p>
-      As with any area in which technological approaches are open for debate, there is the danger of religious fanaticism, where we each rally behind a respective method and defend it vehemently. I would caution you to weigh the options, consider mobile users, and choose an approach makes sense for you.
+      As with any area in which technological approaches are open for debate, there is the danger of religious fanaticism, where we each rally behind a respective method and defend it vehemently. I would caution you to weigh the options, consider mobile users, and choose an approach that makes sense for you.
     </p>
   </div>
   <hr class="grid_12" />
