@@ -25,6 +25,8 @@
 
   // Adapt to width.
   function adapt() {
+    clearInterval(timer);
+
     // Parse browser width.
     var x = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
 
@@ -76,7 +78,6 @@
 
   // Slight delay.
   function react() {
-    clearInterval(timer);
     timer = setInterval(adapt, 100);
   }
 
