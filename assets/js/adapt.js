@@ -21,10 +21,12 @@
   css.id = 'ADAPT_CSS';
 
   // Empty vars to use later.
-  var tag, url, timer;
+  var url, url_old, timer;
 
   // Adapt to width.
   function adapt() {
+    clearInterval(timer);
+
     // Parse browser width.
     var x = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
 
@@ -56,16 +58,17 @@
       }
     }
 
-    // Was the tag created yet?
-    if (!!tag && tag.href !== url) {
-      // If so, just set the path.
-      tag.href = url;
+    // Was it created yet?
+    if (url_old && url_old !== url) {
+      // If so, just set the URL.
+      d.getElementById('ADAPT_CSS').href = url;
+      url_old = url;
     }
     else {
-      // If not, set path and append to DOM.
+      // If not, set URL and append to DOM.
       css.href = url;
+      url_old = url;
       head.appendChild(css);
-      tag = d.getElementById('ADAPT_CSS');
     }
   }
 
@@ -74,7 +77,6 @@
 
   // Slight delay.
   function react() {
-    clearInterval(timer);
     timer = setInterval(adapt, 100);
   }
 
