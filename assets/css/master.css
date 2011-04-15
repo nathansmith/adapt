@@ -17,11 +17,10 @@ body {
 h1 {
   background: #eee url(../images/h1.png) no-repeat right center;
   border-bottom: 1px solid #ccc;
-  padding: 15px 90px 15px 15px;
+  padding: 10px 90px 10px 15px;
   text-shadow: #fff 0 1px 0;
 }
 
-h1,
 h2,
 h3,
 h4,
