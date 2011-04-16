@@ -1,3 +1,9 @@
+/*
+  Adapt.js licensed under GPL and MIT.
+
+  Read more here: http://adapt.960.gs/
+*/
+
 // Closure.
 (function(w, d, config, undefined) {
   // If no config, exit.
@@ -39,7 +45,7 @@
     while (i--) {
       arr = range[i].split('=');
       arr_0 = arr[0];
-      is_range = !!arr_0.match('to');
+      is_range = arr_0.match('to');
       val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
       val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
       file = arr[1].replace(/\s/g, '');
@@ -59,7 +65,7 @@
     }
 
     // Was it created yet?
-    if (!!tag && url_old !== url) {
+    if (url_old && url_old !== url) {
       // If so, just set the URL.
       tag.href = url;
       url_old = url;
@@ -78,6 +84,7 @@
 
   // Slight delay.
   function react() {
+    clearInterval(timer);
     timer = setInterval(adapt, 100);
   }
 
