@@ -31,6 +31,9 @@
 
   // Adapt to width.
   function adapt() {
+    // This clearInterval is for IE.
+    // Really it belongs in react(),
+    // but doesn't do any harm here.
     clearInterval(timer);
 
     // Parse browser width.
@@ -84,6 +87,9 @@
 
   // Slight delay.
   function react() {
+    // Clear interval as window resize fires,
+    // so that it only calls adapt() when the
+    // user has finished resizing the window.
     clearInterval(timer);
     timer = setInterval(adapt, 100);
   }
