@@ -67,12 +67,15 @@
       // Built full URL to CSS file.
       url = path + file;
 
+      // Check if it's the maximum.
       if (i === range_len - 1 && x > val_1) {
         break;
       }
+      // Check if it's the minimum.
       else if (i === 0 && x <= val_1) {
         break;
       }
+      // Check if it's a range.
       else if (x > val_1 && x <= val_2) {
         break;
       }
