@@ -1,7 +1,7 @@
 /*
   Adapt.js licensed under GPL and MIT.
 
-  Read more here: http://adapt.960.gs/
+  Read more here: http://adapt.960.gs
 */
 
 // Closure.
@@ -20,10 +20,9 @@
   var head = d.head || d.getElementsByTagName('head')[0];
 
   // Create empty link tag:
-  // <link rel="stylesheet" id="ADAPT_CSS" />
+  // <link rel="stylesheet" />
   var css = d.createElement('link');
   css.rel = 'stylesheet';
-  css.id = 'ADAPT_CSS';
 
   // Empty vars to use later.
   var tag, url, timer, tag, tag_href;
@@ -84,7 +83,6 @@
       // If not, set URL and append to DOM.
       css.href = url;
       head.appendChild(css);
-      tag = d.getElementById('ADAPT_CSS');
     }
   }
 
@@ -122,5 +120,5 @@
     }
   }
 
-// Pass in window, document.
+// Pass in window, document, config.
 })(this, this.document, ADAPT_CONFIG);
