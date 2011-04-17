@@ -1,6 +1,6 @@
 For more information, see...
 
-http://adapt.960.gs/
+http://adapt.960.gs
 
 This is dual licensed under GPL and MIT.
 
