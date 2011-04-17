@@ -14,8 +14,7 @@
   // Alias config values.
   var path = config.path;
   var dynamic = config.dynamic;
-  var range = config.range;
-  var range_len = range.length;
+  var ranges = config.range;
 
   // Use faster document.head if possible.
   var head = d.head || d.getElementsByTagName('head')[0];
@@ -27,7 +26,7 @@
   css.id = 'ADAPT_CSS';
 
   // Empty vars to use later.
-  var tag, url, url_old, timer;
+  var tag, url, timer, tag, tag_href;
 
   // Adapt to width.
   function adapt() {
@@ -39,44 +38,51 @@
     // Parse browser width.
     var x = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
 
-    // How many ranges?
-    var i = range_len;
+    // loop vars:
+    var rules, val_lt, val_gt;
 
-    // While loop vars.
-    var arr, arr_0, val_1, val_2, is_range, file;
+    for (var file in ranges) if (Object.prototype.hasOwnProperty.call(ranges, file)) {
+      val_lt = undefined;
+      val_gt = 0;
+      rules = ranges[file];
 
-    while (i--) {
-      arr = range[i].split('=');
-      arr_0 = arr[0];
-      is_range = arr_0.match('to');
-      val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
-      val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
-      file = arr[1].replace(/\s/g, '');
+      if (typeof rules === 'string') {
+        val_lt = parseInt(rules, 10);
+      } else if (typeof rules === 'number') {
+        val_lt = rules;
+      } else {
+        // must be an object
+        if (rules.gt) {
+          val_gt = typeof rules.gt === 'string' ? parseInt(rules.gt, 10) : rules.gt;
+        }
 
-      if (i === range_len - 1 && x > val_1) {
+        if (rules.lt) {
+          val_lt = typeof rules.lt === 'string' ? parseInt(rules.lt, 10) : rules.lt;
+        }
+      }
+
+      if (val_lt !== undefined && (x > val_gt && x <= val_lt)) {
         url = path + file;
         break;
-      }
-      else if (i === 0 && x <= val_1) {
+      } else if (val_lt === undefined && (x >= val_gt)) {
         url = path + file;
         break;
-      }
-      else if (x > val_1 && x <= val_2) {
-        url = path + file;
-        break;
-      }
+      } // else continue
     }
 
-    // Was it created yet?
-    if (url_old && url_old !== url) {
-      // If so, just set the URL.
-      tag.href = url;
-      url_old = url;
-    }
-    else {
+    if (tag) {
+      tag_href = tag.href;
+
+      if (tag_href.substr(tag_href.length - url.length) === url) {
+        // Don't change urls
+        return;
+      } else {
+        // If so, just set the URL.
+        tag.href = url;
+      }
+    } else {
       // If not, set URL and append to DOM.
       css.href = url;
-      url_old = url;
       head.appendChild(css);
       tag = d.getElementById('ADAPT_CSS');
     }

@@ -25,17 +25,17 @@ var ADAPT_CONFIG = {
   // First range entry is the minimum.
   // Last range entry is the maximum.
   // Should have at least one "to" range.
-  range: [
-    '760px            = mobile.min.css',
-    '760px  to 960px  = 720.min.css',
-    '960px  to 1280px = 960.min.css',
-    '1280px to 1600px = 1200.min.css',
-    '1600px to 1920px = 1560.min.css',
-    '1920px           = fluid.min.css'
-  ]
+  range: {
+    'mobile.css': 760,
+    '720.css':    {'gt': 760,  'lt': 960},
+    '960.css':    {'gt': 980,  'lt': 1280},
+    '1200.css':   {'gt': 1280, 'lt': 1600},
+    '1560.css':   {'gt': 1600, 'lt': 1920},
+    'fluid.css':  {'gt': 1920}
+  }
 };
 </script>
-<script src="assets/js/adapt.min.js"></script>
+<script src="assets/js/adapt.js"></script>
 </head>
 <body>
 <div class="container_12 clearfix">
