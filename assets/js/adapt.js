@@ -1,7 +1,7 @@
 /*
   Adapt.js licensed under GPL and MIT.
 
-  Read more here: http://adapt.960.gs/
+  Read more here: http://adapt.960.gs
 */
 
 // Closure.
@@ -21,13 +21,12 @@
   var head = d.head || d.getElementsByTagName('head')[0];
 
   // Create empty link tag:
-  // <link rel="stylesheet" id="ADAPT_CSS" />
+  // <link rel="stylesheet" />
   var css = d.createElement('link');
   css.rel = 'stylesheet';
-  css.id = 'ADAPT_CSS';
 
   // Empty vars to use later.
-  var tag, url, url_old, timer;
+  var url, url_old, timer;
 
   // Adapt to width.
   function adapt() {
@@ -46,23 +45,35 @@
     var arr, arr_0, val_1, val_2, is_range, file;
 
     while (i--) {
+      // Turn string into array.
       arr = range[i].split('=');
+
+      // Width is to the left of "=".
       arr_0 = arr[0];
-      is_range = arr_0.match('to');
-      val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
-      val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
+
+      // File name is to the right of "=".
+      // Presuppoes a file with no spaces.
       file = arr[1].replace(/\s/g, '');
 
+      // Assume min/max if "to" isn't present.
+      is_range = arr_0.match('to');
+
+      // If it's a range, split left/right sides of "to",
+      // and then convert each one into numerical values.
+      // If it's not a range, turn min/max into a number.
+      val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
+      val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
+
+      // Built full URL to CSS file.
+      url = path + file;
+
       if (i === range_len - 1 && x > val_1) {
-        url = path + file;
         break;
       }
       else if (i === 0 && x <= val_1) {
-        url = path + file;
         break;
       }
       else if (x > val_1 && x <= val_2) {
-        url = path + file;
         break;
       }
     }
@@ -70,7 +81,7 @@
     // Was it created yet?
     if (url_old && url_old !== url) {
       // If so, just set the URL.
-      tag.href = url;
+      css.href = url;
       url_old = url;
     }
     else {
@@ -78,7 +89,6 @@
       css.href = url;
       url_old = url;
       head.appendChild(css);
-      tag = d.getElementById('ADAPT_CSS');
     }
   }
 
@@ -116,5 +126,5 @@
     }
   }
 
-// Pass in window, document.
+// Pass in window, document, config.
 })(this, this.document, ADAPT_CONFIG);
