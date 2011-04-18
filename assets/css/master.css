@@ -105,7 +105,8 @@ code {
   font-family: Menlo, Courier, monospace;
 }
 
-pre {
+pre,
+.notice {
   background: #ffe;
   border: 1px solid;
   border-color: #eed #ccb #bba #ddc;
