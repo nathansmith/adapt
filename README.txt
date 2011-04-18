@@ -32,3 +32,7 @@ Thanks to:
 
   http://joeylomanto.com
   https://github.com/joeylomanto
+
+- Peter Schott for testing on IE7 in Windows 7 Phone.
+
+  http://www.linkedin.com/in/paschott
