@@ -5,28 +5,24 @@
 */
 
 // Closure.
-(function(w, d, config, undefined) {
+(function(config, w, d, clearInterval, parseInt, undefined) {
   // If no config, exit.
   if (!config) {
     return;
   }
 
+  // Empty vars to use later.
+  var url, url_old, timer;
+
   // Alias config values.
-  var path = config.path;
-  var dynamic = config.dynamic;
   var range = config.range;
   var range_len = range.length;
-
-  // Use faster document.head if possible.
-  var head = d.head || d.getElementsByTagName('head')[0];
+  var event = w.addEventListener;
 
   // Create empty link tag:
   // <link rel="stylesheet" />
   var css = d.createElement('link');
   css.rel = 'stylesheet';
-
-  // Empty vars to use later.
-  var url, url_old, timer;
 
   // Adapt to width.
   function adapt() {
@@ -65,18 +61,10 @@
       val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
 
       // Built full URL to CSS file.
-      url = path + file;
+      url = config.path + file;
 
       // Check if it's the maximum.
-      if (i === range_len - 1 && x > val_1) {
-        break;
-      }
-      // Check if it's the minimum.
-      else if (i === 0 && x <= val_1) {
-        break;
-      }
-      // Check if it's a range.
-      else if (x > val_1 && x <= val_2) {
+      if ((i === range_len - 1 && x > val_1) || (i === 0 && x <= val_1) || (x > val_1 && x <= val_2)) {
         break;
       }
     }
@@ -91,7 +79,8 @@
       // If not, set URL and append to DOM.
       css.href = url;
       url_old = url;
-      head.appendChild(css);
+      // Use faster document.head if possible.
+      (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
     }
   }
 
@@ -109,25 +98,11 @@
 
   // Do we want to watch for
   // resize and device tilt?
-  if (dynamic) {
-    // Event listeners for window
-    // resize and phone rotation.
-    if (w.addEventListener) {
-      // Good browsers.
-      w.addEventListener('resize', react, false);
-      w.addEventListener('orientationchange', react, false);
-    }
-    else if (w.attachEvent) {
-      // Legacy IE versions.
-      w.attachEvent('onresize', react);
-      w.attachEvent('onorientationchange', react);
-    }
-    else {
-      // Old-school fallback.
-      w.onresize = react;
-      w.onorientationchange = react;
-    }
+  if (config.dynamic) {
+    // Event listener for window resize,
+    // also triggered by phone rotation.
+    event ? event('resize', react, false) : w.attachEvent('onresize', react);
   }
 
-// Pass in window, document, config.
-})(this, this.document, ADAPT_CONFIG);
+// config, window, etc.
+})(ADAPT_CONFIG, this, document, clearInterval, parseInt);
