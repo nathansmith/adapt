@@ -15,8 +15,6 @@
   var url, url_old, timer;
 
   // Alias config values.
-  var dynamic = config.dynamic;
-  var path = config.path;
   var range = config.range;
   var range_len = range.length;
 
@@ -64,7 +62,7 @@
       // Check if it's max, min, range.
       if ((i === range_len - 1 && x > val_1) || (i === 0 && x <= val_1) || (x > val_1 && x <= val_2)) {
         // Built full URL to CSS file.
-        url = path + file;
+        url = config.path + file;
         break;
       }
     }
@@ -98,7 +96,7 @@
 
   // Do we want to watch for
   // resize and device tilt?
-  if (dynamic) {
+  if (config.dynamic) {
     // Event listener for window resize,
     // also triggered by phone rotation.
     w.addEventListener ? w.addEventListener('resize', react, false) : w.attachEvent('onresize', react);
