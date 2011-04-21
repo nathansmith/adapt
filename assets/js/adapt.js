@@ -5,7 +5,7 @@
 */
 
 // Closure.
-(function(config, w, d, clearInterval, parseInt, undefined) {
+(function(config, w, d, undefined) {
   // If no config, exit.
   if (!config) {
     return;
@@ -15,9 +15,10 @@
   var url, url_old, timer;
 
   // Alias config values.
+  var dynamic = config.dynamic;
+  var path = config.path;
   var range = config.range;
   var range_len = range.length;
-  var event = w.addEventListener;
 
   // Create empty link tag:
   // <link rel="stylesheet" />
@@ -34,11 +35,11 @@
     // Parse browser width.
     var x = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
 
-    // How many ranges?
-    var i = range_len;
-
     // While loop vars.
     var arr, arr_0, val_1, val_2, is_range, file;
+
+    // How many ranges?
+    var i = range_len;
 
     while (i--) {
       // Turn string into array.
@@ -60,11 +61,10 @@
       val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
       val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
 
-      // Built full URL to CSS file.
-      url = config.path + file;
-
-      // Check if it's the maximum.
+      // Check if it's max, min, range.
       if ((i === range_len - 1 && x > val_1) || (i === 0 && x <= val_1) || (x > val_1 && x <= val_2)) {
+        // Built full URL to CSS file.
+        url = path + file;
         break;
       }
     }
@@ -98,11 +98,11 @@
 
   // Do we want to watch for
   // resize and device tilt?
-  if (config.dynamic) {
+  if (dynamic) {
     // Event listener for window resize,
     // also triggered by phone rotation.
-    event ? event('resize', react, false) : w.attachEvent('onresize', react);
+    w.addEventListener ? w.addEventListener('resize', react, false) : w.attachEvent('onresize', react);
   }
 
-// config, window, etc.
-})(ADAPT_CONFIG, this, document, clearInterval, parseInt);
+// config, window, document, etc.
+})(ADAPT_CONFIG, this, this.document);
