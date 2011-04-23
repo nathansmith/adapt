@@ -39,6 +39,7 @@
 
     // How many ranges?
     var i = range_len;
+    var last = range_len - 1;
 
     while (i--) {
       // Turn string into array.
@@ -60,11 +61,15 @@
       val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
       val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
 
-      // Check if it's max, min, range.
-      if ((i === range_len - 1 && x > val_1) || (i === 0 && x <= val_1) || (x > val_1 && x <= val_2)) {
+      // Check if it's min, max, range.
+      if ((!val_2 && i === 0 && x <= val_1) || (!val_2 && i === last && range_len > 1 && x > val_1) || (x > val_1 && x <= val_2)) {
         // Built full URL to CSS file.
         url = path + file;
         break;
+      }
+      else {
+        // Blank if no conditions met.
+        url = '';
       }
     }
 
