@@ -62,7 +62,7 @@
       val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
 
       // Check if it's min, max, range.
-      if ((!val_2 && i === 0 && x <= val_1) || (!val_2 && i === last && range_len > 1 && x > val_1) || (x > val_1 && x <= val_2)) {
+      if ((val_2 && x > val_1 && x <= val_2) || (i === 0 && x <= val_1) || (range_len > 1 && i === last && x > val_1)) {
         // Built full URL to CSS file.
         url = path + file;
         break;
