@@ -5,7 +5,7 @@
 */
 
 // Closure.
-(function(config, w, d, undefined) {
+(function(w, d, config, undefined) {
   // If no config, exit.
   if (!config) {
     return;
@@ -61,7 +61,7 @@
       val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
       val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
 
-      // Check if it's min, max, range.
+      // Check if it's a range, min, or max.
       if ((x <= val_2 && x > val_1) || (i === 0 && x <= val_1) || (range_len > 1 && i === last && x > val_1)) {
         // Built full URL to CSS file.
         url = path + file;
@@ -119,5 +119,5 @@
     }
   }
 
-// Pass in config, window, document, undefined.
-})(ADAPT_CONFIG, this, this.document);
+// Pass in window, document, config, undefined.
+})(this, this.document, ADAPT_CONFIG);
