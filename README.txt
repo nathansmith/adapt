@@ -36,3 +36,8 @@ Thanks to:
 - Peter Schott for testing on IE7 in Windows 7 Phone.
 
   http://www.linkedin.com/in/paschott
+
+- R.A. Ray for pointing out "initial-scale=1" is needed.
+
+  http://robertadamray.com
+  Issue: http://j.mp/initial-scale-1
