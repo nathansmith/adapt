@@ -286,7 +286,7 @@
   left: -91.667%;
 }
 
-/* Clear Floated Elements
+/* `Clear Floated Elements
 ----------------------------------------------------------------------------------------------------*/
 
 /* http://sonspring.com/journal/clearing-floats */
@@ -300,27 +300,27 @@
   height: 0;
 }
 
-/* http://perishablepress.com/press/2008/02/05/lessons-learned-concerning-the-clearfix-css-hack */
+/* http://www.yuiblog.com/blog/2010/09/27/clearfix-reloaded-overflowhidden-demystified */
 
+.clearfix:before,
 .clearfix:after {
-  clear: both;
-  content: ' ';
+  content: '\0020';
   display: block;
-  font-size: 0;
-  line-height: 0;
+  overflow: hidden;
   visibility: hidden;
   width: 0;
   height: 0;
 }
 
-.clearfix {
-  display: inline-block;
+.clearfix:after {
+  clear: both;
 }
 
-* html .clearfix {
-  height: 1%;
-}
+/*
+  The following zoom:1 rule is specifically for IE6 + IE7.
+  Move to separate stylesheet if invalid CSS is a problem.
+*/
 
 .clearfix {
-  display: block;
+  zoom: 1;
 }
