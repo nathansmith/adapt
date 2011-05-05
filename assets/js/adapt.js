@@ -32,7 +32,7 @@
     clearInterval(timer);
 
     // Parse browser width.
-    var x = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
+    var width = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
 
     // While loop vars.
     var arr, arr_0, val_1, val_2, is_range, file;
@@ -62,7 +62,7 @@
       val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
 
       // Check for: minimum, maxiumum, range.
-      if ((!val_2 && i === last && x > val_1) || (x > val_1 && x <= val_2)) {
+      if ((!val_2 && i === last && width > val_1) || (width > val_1 && width <= val_2)) {
         // Built full URL to CSS file.
         url = path + file;
         break;
@@ -74,17 +74,17 @@
     }
 
     // Was it created yet?
-    if (url_old && url_old !== url) {
-      // If so, just set the URL.
-      css.href = url;
-      url_old = url;
-    }
-    else {
+    if (!url_old) {
       // If not, set URL and append to DOM.
       css.href = url;
       url_old = url;
       // Use faster document.head if possible.
       (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
+    }
+    else if (url_old !== url) {
+      // If so, just set the URL.
+      css.href = url;
+      url_old = url;
     }
   }
 
