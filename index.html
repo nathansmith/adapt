@@ -26,7 +26,7 @@ var ADAPT_CONFIG = {
   // Last range entry is the maximum.
   // Separate ranges by "to" keyword.
   range: [
-    '760px            = mobile.min.css',
+    '0px    to 760px  = mobile.min.css',
     '760px  to 980px  = 720.min.css',
     '980px  to 1280px = 960.min.css',
     '1280px to 1600px = 1200.min.css',
@@ -49,7 +49,7 @@ var ADAPT_CONFIG = {
       What is this?
     </h2>
     <p>
-      <a href="https://github.com/nathansmith/adapt/blob/master/assets/js/adapt.js">Adapt.js</a> is a lightweight (777 bytes <a href="https://github.com/nathansmith/adapt/blob/master/assets/js/adapt.min.js">minified</a>) JavaScript file that determines which CSS file to load before the browser renders a page. If the browser tilts or resizes, Adapt.js simply checks its width, and serves only the CSS that is needed, when it is needed.
+      <a href="https://github.com/nathansmith/adapt/blob/master/assets/js/adapt.js">Adapt.js</a> is a lightweight (755 bytes <a href="https://github.com/nathansmith/adapt/blob/master/assets/js/adapt.min.js">minified</a>) JavaScript file that determines which CSS file to load before the browser renders a page. If the browser tilts or resizes, Adapt.js simply checks its width, and serves only the CSS that is needed, when it is needed.
     </p>
     <p>
       A potential drawback of Adapt.js is the possibility of a brief flash of unstyled content as a new stylesheet is being fetched (think of it as “Ajax” for CSS). I have done my best to mitigate this by keeping CSS files small (3 KB). It is worth noting this is a proposed, not prescribed, approach to a problem with multiple solutions.
@@ -143,7 +143,7 @@ var ADAPT_CONFIG = {
   // Last range entry is the maximum.
   // Separate ranges by "to" keyword.
   range: [
-    '760px            = mobile.css',
+    '0px    to 760px  = mobile.css',
     '760px  to 980px  = 720.css',
     '980px  to 1280px = 960.css',
     '1280px to 1600px = 1200.css',
