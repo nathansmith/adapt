@@ -57,11 +57,11 @@
 
       // If it's a range, split left/right sides of "to",
       // and then convert each one into numerical values.
-      // If it's not a range, turn min/max into a number.
+      // If it's not a range, turn maximum into a number.
       val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
       val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
 
-      // Check for: minimum, maxiumum, range.
+      // Check for maxiumum or range.
       if ((!val_2 && i === last && width > val_1) || (width > val_1 && width <= val_2)) {
         // Built full URL to CSS file.
         url = path + file;
