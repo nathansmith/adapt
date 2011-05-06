@@ -20,7 +20,7 @@ Thanks to:
   https://github.com/tiffehr
   https://gist.github.com/905220
 
-- Mathias Bynens, for pointing out document.head as faster than
+- Mathias Bynens, for pointing out document.head is faster than
   document.getElementsByTagName('head')[0] for newer browsers.
 
   http://mathiasbynens.be/
