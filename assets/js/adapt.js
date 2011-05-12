@@ -76,10 +76,10 @@
       if ((!val_2 && i === last && width > val_1) || (width > val_1 && width <= val_2)) {
         // Built full URL to CSS file.
         if(file){
-			url = path + file;
-		}
-		if(adapt_class){
-        	class_name = adapt_class;
+          url = path + file;
+        }
+	if(adapt_class){
+          class_name = adapt_class;
         }
         break;
       }
@@ -99,24 +99,24 @@
       // Use faster document.head if possible.
       (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
     }
-    else if ((url_old !== url)) {
+    else if (url_old !== url) {
       // If so, just set the URL.
       css.href = url;
       url_old = url;
     }
     
     
-    // Was it addes yet?
+    // Was it added yet?
     if (!class_name_old && class_name) {
       // If not, set ClassName and add to HTML-Tag.
       class_name_old = class_name;
       // Add Classname
       docElement.className += ' ' + class_name + ' ';
     }
-    else if ((class_name_old !== class_name)) {
+    else if (class_name_old !== class_name) {
       // replace Classname
       var class_regexp = new RegExp(class_name_old);
-	  docElement.className = docElement.className.replace(class_regexp, class_name);
+      docElement.className = docElement.className.replace(class_regexp, class_name);
       class_name_old = class_name;
     }
     
