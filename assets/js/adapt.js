@@ -12,7 +12,7 @@
   }
 
   // Empty vars to use later.
-  var url, url_old, timer;
+  var url, url_old, timer, class_name, class_name_old;
 
   // Alias config values.
   var path = config.path;
@@ -23,6 +23,10 @@
   // <link rel="stylesheet" />
   var css = d.createElement('link');
   css.rel = 'stylesheet';
+  
+  
+  //Cache html-tag
+  var docElement = document.documentElement;
 
   // Adapt to width.
   function adapt() {
@@ -35,7 +39,7 @@
     var width = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
 
     // While loop vars.
-    var arr, arr_0, val_1, val_2, is_range, file;
+    var arr, arr_0, val_1, val_2, is_range, file, fileClass;
 
     // How many ranges?
     var i = range_len;
@@ -51,6 +55,13 @@
       // File name is to the right of "=".
       // Presuppoes a file with no spaces.
       file = arr[1].replace(/\s/g, '');
+      
+      // Check for pipes (||) and get ClassName for range
+      if(file.('\\|\\|')){
+      	fileClass =  file.split('||');
+      	file = fileClass[0];
+      	class = fileClass[1];
+      }
 
       // Assume min/max if "to" isn't present.
       is_range = arr_0.match('to');
@@ -61,31 +72,55 @@
       val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
       val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
 
-      // Check for maxiumum or range.
+      // Check for maxiumum or range and url
       if ((!val_2 && i === last && width > val_1) || (width > val_1 && width <= val_2)) {
         // Built full URL to CSS file.
-        url = path + file;
+        if(file){
+			url = path + file;
+		}
+		if(class){
+        	class_name = class;
+        }
         break;
       }
       else {
         // Blank if no conditions met.
         url = '';
+        class_name = '';
+        
       }
     }
 
     // Was it created yet?
-    if (!url_old) {
+    if (!url_old && url) {
       // If not, set URL and append to DOM.
       css.href = url;
       url_old = url;
       // Use faster document.head if possible.
       (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
     }
-    else if (url_old !== url) {
+    else if ((url_old !== url)) {
       // If so, just set the URL.
       css.href = url;
       url_old = url;
     }
+    
+    
+    // Was it addes yet?
+    if (!class_name_old && class_name) {
+      // If not, set ClassName and add to HTML-Tag.
+      class_name_old = class_name;
+      // Add Classname
+      docElement.className += ' ' + class_name + ' ';
+    }
+    else if ((class_name_old !== class_name)) {
+      // replace Classname
+      var class_regexp = new RegExp(class_name_old);
+	  docElement.className = docElement.className.replace(class_regexp, class_name);
+      class_name_old = class_name;
+    }
+    
+    
   }
 
   // Fire off once.
