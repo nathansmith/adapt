@@ -25,17 +25,18 @@ var ADAPT_CONFIG = {
   // First range entry is the minimum.
   // Last range entry is the maximum.
   // Separate ranges by "to" keyword.
+  // use files and/or classnames
   range: [
-    '0px    to 760px  = mobile.min.css',
-    '760px  to 980px  = 720.min.css',
-    '980px  to 1280px = 960.min.css',
-    '1280px to 1600px = 1200.min.css',
-    '1600px to 1920px = 1560.min.css',
-    '1920px           = fluid.min.css'
+    '0px    to 760px  = mobile.min.css||adapt_mobile',
+    '760px  to 980px  = 720.min.css||adapt_720',
+    '980px  to 1280px = 960.min.css||adapt_960',
+    '1280px to 1600px = 1200.min.css||adapt_1200',
+    '1600px to 1920px = 1560.min.css||adapt_1560',
+    '1920px           = fluid.min.css||adapt_fluid'
   ]
 };
 </script>
-<script src="assets/js/adapt.min.js"></script>
+<script src="assets/js/adapt.js"></script>
 </head>
 <body>
 <div class="container_12 clearfix">
@@ -142,13 +143,14 @@ var ADAPT_CONFIG = {
   // First range entry is the minimum.
   // Last range entry is the maximum.
   // Separate ranges by "to" keyword.
+  // use files and/or classnames
   range: [
-    '0px    to 760px  = mobile.css',
-    '760px  to 980px  = 720.css',
-    '980px  to 1280px = 960.css',
-    '1280px to 1600px = 1200.css',
-    '1600px to 1920px = 1560.css',
-    '1920px           = fluid.css'
+    '0px    to 760px  = mobile.min.css||adapt_mobile',
+    '760px  to 980px  = 720.min.css||adapt_720',
+    '980px  to 1280px = 960.min.css||adapt_960',
+    '1280px to 1600px = 1200.min.css||adapt_1200',
+    '1600px to 1920px = 1560.min.css||adapt_1560',
+    '1920px           = fluid.min.css||adapt_fluid'
   ]
 };</pre>
   </div>
