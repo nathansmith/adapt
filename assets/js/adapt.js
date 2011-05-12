@@ -39,7 +39,7 @@
     var width = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
 
     // While loop vars.
-    var arr, arr_0, val_1, val_2, is_range, file, fileClass;
+    var arr, arr_0, val_1, val_2, is_range, file, fileClass, adapt_class;
 
     // How many ranges?
     var i = range_len;
@@ -57,10 +57,10 @@
       file = arr[1].replace(/\s/g, '');
       
       // Check for pipes (||) and get ClassName for range
-      if(file.('\\|\\|')){
+      if(file.match('\\|\\|')){
       	fileClass =  file.split('||');
       	file = fileClass[0];
-      	class = fileClass[1];
+      	adapt_class = fileClass[1];
       }
 
       // Assume min/max if "to" isn't present.
@@ -78,8 +78,8 @@
         if(file){
 			url = path + file;
 		}
-		if(class){
-        	class_name = class;
+		if(adapt_class){
+        	class_name = adapt_class;
         }
         break;
       }
