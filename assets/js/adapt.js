@@ -18,11 +18,22 @@
   var path = config.path;
   var range = config.range;
   var range_len = range.length;
+  var callback = config.callback;
 
   // Create empty link tag:
   // <link rel="stylesheet" />
   var css = d.createElement('link');
   css.rel = 'stylesheet';
+
+  // Called within adapt().
+  function change(i, width) {
+    // Set the URL.
+    css.href = url;
+    url_old = url;
+
+    // Callback, if defined.
+    typeof callback === 'function' && callback(i, width);
+  }
 
   // Adapt to width.
   function adapt() {
@@ -75,16 +86,15 @@
 
     // Was it created yet?
     if (!url_old) {
-      // If not, set URL and append to DOM.
-      css.href = url;
-      url_old = url;
+      // Apply changes.
+      change(i, width);
+
       // Use faster document.head if possible.
       (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
     }
     else if (url_old !== url) {
-      // If so, just set the URL.
-      css.href = url;
-      url_old = url;
+      // Apply changes.
+      change(i, width);
     }
   }
 
