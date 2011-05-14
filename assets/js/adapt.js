@@ -18,7 +18,7 @@
   var path = config.path;
   var range = config.range;
   var range_len = range.length;
-  var callback = config.callback;
+  var callback = typeof config.callback === 'function' ? config.callback : undefined;
 
   // Create empty link tag:
   // <link rel="stylesheet" />
@@ -32,7 +32,7 @@
     url_old = url;
 
     // Callback, if defined.
-    typeof callback === 'function' && callback(i, width);
+    callback && callback(i, width);
   }
 
   // Adapt to width.
