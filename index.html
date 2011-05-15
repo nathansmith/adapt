@@ -159,8 +159,11 @@ var ADAPT_CONFIG = {
     <h3>
       Configuration
     </h3>
+    <p class="notice">
+      <b><a href="http://sonspring.com/journal/adapt-js-explained#how-to-use-adapt-js">READ THIS</a></b> &mdash; for all possible options.
+    </p>
     <p>
-      To use Adapt.js, all you have to do is set up a few parameters: <code>path</code> is the directory structure in which your stylesheets reside, <code>dynamic</code> is a boolean (<code>true</code> or <code>false</code>) that tells Adapt.js whether to watch the <code>window</code> for its <code>resize</code> event, also triggered by tablet or phone tilt. Lastly, <code>range</code> defines the screen widths to associate with various CSS files. The defaults are shown in the adjacent code example.
+      Adapt.js, accepts a few parameters: <code>path</code> is where your stylesheets reside, <code>dynamic</code> is a boolean (<code>true</code> or <code>false</code>) that says whether to watch the <code>window</code> for its <code>resize</code> event, also triggered by tablet or phone tilt. Widths and optional CSS files are specified in <code>range</code>. The defaults are shown in the adjacent code example. You can also specify an optional <code>callback</code> function, that will pass <code>range</code> index and width.
     </p>
     <hr />
     <h3>
