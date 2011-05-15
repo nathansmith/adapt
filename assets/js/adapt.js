@@ -15,23 +15,23 @@
   var url, url_old, timer;
 
   // Alias config values.
-  var path = config.path;
+  var callback = typeof config.callback === 'function' ? config.callback : undefined;
+  var path = config.path ? config.path : '';
   var range = config.range;
   var range_len = range.length;
-  var callback = typeof config.callback === 'function' ? config.callback : undefined;
 
   // Create empty link tag:
   // <link rel="stylesheet" />
   var css = d.createElement('link');
   css.rel = 'stylesheet';
 
-  // Called within adapt().
+  // Called from within adapt().
   function change(i, width) {
     // Set the URL.
     css.href = url;
     url_old = url;
 
-    // Callback, if defined.
+    // Call callback, if defined.
     callback && callback(i, width);
   }
 
@@ -61,7 +61,8 @@
 
       // File name is to the right of "=".
       // Presuppoes a file with no spaces.
-      file = arr[1].replace(/\s/g, '');
+      // If no file specified, assign [i].
+      file = arr[1] ? arr[1].replace(/\s/g, '') : i;
 
       // Assume min/max if "to" isn't present.
       is_range = arr_0.match('to');
@@ -89,8 +90,9 @@
       // Apply changes.
       change(i, width);
 
+      // Add the CSS, only if path is defined.
       // Use faster document.head if possible.
-      (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
+      path && (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
     }
     else if (url_old !== url) {
       // Apply changes.
