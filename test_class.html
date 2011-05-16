@@ -12,6 +12,7 @@ function myCallback(i, width) {
   // Find all instances of range_NUMBER and kill 'em.
   html.className = html.className.replace(/(\s+)?range_\d/g, '');
 
+  // Check for valid range.
   if (i > -1) {
     // Add class="range_NUMBER"
     html.className += ' range_' + i;
@@ -48,11 +49,13 @@ var ADAPT_CONFIG = {
 
 * {
   font-family: sans-serif;
+  line-height: 1.5;
 }
 
 .range_test {
   /* Default */
   display: none;
+  font-weight: bold;
 }
 
 html.range_0 #p_0 {
@@ -87,6 +90,10 @@ html.range_5 #p_5 {
 </style>
 </head>
 <body>
+<p>
+  This page demonstrates how a callback function can be<br />
+  used with Adapt.js to change the class of the HTML tag.
+</p>
 <p class="range_test" id="p_0">
   Visible at: 0px to 760px
 </p>
