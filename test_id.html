@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Adapt.js - HTML ID Test</title>
+<script>
+function myCallback(i, width) {
+  document.documentElement.id = 'range_' + i;
+
+  // Note: Not making use of width here, but I'm sure
+  // you could think of an interesting way to use it.
+}
+
+// Edit to suit your needs.
+var ADAPT_CONFIG = {
+  // Where is your CSS?
+  path: 'assets/css/',
+
+  // false = Only run once, when page first loads.
+  // true = Change on window resize and page tilt.
+  dynamic: true,
+
+  // Optional callback... myCallback(i, width)
+  callback: myCallback,
+
+  // First range entry is the minimum.
+  // Last range entry is the maximum.
+  // Separate ranges by "to" keyword.
+  range: [
+    '0 to 760',
+    '760 to 980',
+    '980 to 1280',
+    '1280 to 1600',
+    '1600 to 1920',
+    '1920'
+  ]
+};
+</script>
+<script src="assets/js/adapt.min.js"></script>
+<style>
+
+* {
+  font-family: sans-serif;
+}
+
+.range_test {
+  /* Default */
+  display: none;
+}
+
+html#range_0 #p_0 {
+  /* Style overrides for: 0px to 760px */
+  display: block;
+}
+
+html#range_1 #p_1 {
+  /* Style overrides for: 760px to 980px */
+  display: block;
+}
+
+html#range_2 #p_2 {
+  /* Style overrides for: 980px to 1280px */
+  display: block;
+}
+
+html#range_3 #p_3 {
+  /* Style overrides for: 1280px to 1600px */
+  display: block;
+}
+
+html#range_4 #p_4 {
+  /* Style overrides for: 1600px to 1920px */
+  display: block;
+}
+
+html#range_5 #p_5 {
+  /* Style overrides for: above 1920px */
+  display: block;
+}
+</style>
+</head>
+<body>
+<p class="range_test" id="p_0">
+  Visible at: 0px to 760px
+</p>
+<p class="range_test" id="p_1">
+  Visible at: 760px to 980px
+</p>
+<p class="range_test" id="p_2">
+  Visible at: 980px to 1280px
+</p>
+<p class="range_test" id="p_3">
+  Visible at: 1280px to 1600px
+</p>
+<p class="range_test" id="p_4">
+  Visible at: 1600px to 1920px
+</p>
+<p class="range_test" id="p_5">
+  Visible at: above 1920px
+</p>
+</body>
+</html>
