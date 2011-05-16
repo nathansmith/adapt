@@ -4,12 +4,16 @@
 <meta charset="utf-8" />
 <title>Adapt.js - HTML Class Test</title>
 <script>
+// Called by Adapt.js
 function myCallback(i, width) {
+  // Alias HTML tag.
   var html = document.documentElement;
 
+  // Find all instances of range_NUMBER and kill 'em.
   html.className = html.className.replace(/(\s+)?range_\d/g, '');
 
   if (i > -1) {
+    // Add class="range_NUMBER"
     html.className += ' range_' + i;
   }
 
@@ -19,9 +23,6 @@ function myCallback(i, width) {
 
 // Edit to suit your needs.
 var ADAPT_CONFIG = {
-  // Where is your CSS?
-  path: 'assets/css/',
-
   // false = Only run once, when page first loads.
   // true = Change on window resize and page tilt.
   dynamic: true,
