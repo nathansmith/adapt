@@ -3,39 +3,6 @@
 <head>
 <meta charset="utf-8" />
 <title>Adapt.js - HTML ID Test</title>
-<script>
-// Called by Adapt.js
-function myCallback(i, width) {
-  // Replace HTML tag's ID.
-  document.documentElement.id = 'range_' + i;
-
-  // Note: Not making use of width here, but I'm sure
-  // you could think of an interesting way to use it.
-}
-
-// Edit to suit your needs.
-var ADAPT_CONFIG = {
-  // false = Only run once, when page first loads.
-  // true = Change on window resize and page tilt.
-  dynamic: true,
-
-  // Optional callback... myCallback(i, width)
-  callback: myCallback,
-
-  // First range entry is the minimum.
-  // Last range entry is the maximum.
-  // Separate ranges by "to" keyword.
-  range: [
-    '0 to 760',
-    '760 to 980',
-    '980 to 1280',
-    '1280 to 1600',
-    '1600 to 1920',
-    '1920'
-  ]
-};
-</script>
-<script src="assets/js/adapt.min.js"></script>
 <style>
 
 * {
@@ -79,6 +46,39 @@ html#range_5 #p_5 {
   display: block;
 }
 </style>
+<script>
+// Called by Adapt.js
+function myCallback(i, width) {
+  // Replace HTML tag's ID.
+  document.documentElement.id = 'range_' + i;
+
+  // Note: Not making use of width here, but I'm sure
+  // you could think of an interesting way to use it.
+}
+
+// Edit to suit your needs.
+var ADAPT_CONFIG = {
+  // false = Only run once, when page first loads.
+  // true = Change on window resize and page tilt.
+  dynamic: true,
+
+  // Optional callback... myCallback(i, width)
+  callback: myCallback,
+
+  // First range entry is the minimum.
+  // Last range entry is the maximum.
+  // Separate ranges by "to" keyword.
+  range: [
+    '0 to 760',
+    '760 to 980',
+    '980 to 1280',
+    '1280 to 1600',
+    '1600 to 1920',
+    '1920'
+  ]
+};
+</script>
+<script src="assets/js/adapt.min.js"></script>
 </head>
 <body>
 <p>
