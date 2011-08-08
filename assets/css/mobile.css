@@ -14,6 +14,12 @@
   margin-right: 10px;
 }
 
+.alpha,
+.omega {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .align_center,
 .align_right {
   text-align: left;

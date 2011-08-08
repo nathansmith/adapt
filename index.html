@@ -30,8 +30,9 @@ var ADAPT_CONFIG = {
     '760px  to 980px  = 720.min.css',
     '980px  to 1280px = 960.min.css',
     '1280px to 1600px = 1200.min.css',
-    '1600px to 1920px = 1560.min.css',
-    '1920px           = fluid.min.css'
+    '1600px to 1940px = 1560.min.css',
+    '1940px to 2540px = 1920.min.css',
+    '2540px           = 2520.min.css'
   ]
 };
 </script>
@@ -111,15 +112,23 @@ var ADAPT_CONFIG = {
             <a href="assets/css/1560.css">1560.css</a>
           </th>
           <td>
-            1600 to 1920px
+            1600 to 1940px
           </td>
         </tr>
         <tr>
           <th>
-            <a href="assets/css/fluid.css">fluid.css</a>
+            <a href="assets/css/fluid.css">1920.css</a>
           </th>
           <td>
-            above 1920px
+            1940px to 2540px
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <a href="assets/css/fluid.css">2520.css</a>
+          </th>
+          <td>
+            above 2540px
           </td>
         </tr>
       </tbody>
@@ -159,7 +168,8 @@ var ADAPT_CONFIG = {
     '980px  to 1280px = 960.css',
     '1280px to 1600px = 1200.css',
     '1600px to 1920px = 1560.css',
-    '1920px           = fluid.css'
+    '1940px to 2540px = 1920.css',
+    '2540px           = 2520.css'
   ]
 };</pre>
   </div>
