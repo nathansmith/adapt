@@ -37,10 +37,10 @@
 
   // Adapt to width.
   function adapt() {
-    // This clearInterval is for IE.
+    // This clearTimeout is for IE.
     // Really it belongs in react(),
     // but doesn't do any harm here.
-    clearInterval(timer);
+    clearTimeout(timer);
 
     // Parse browser width.
     var width = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
@@ -105,11 +105,11 @@
 
   // Slight delay.
   function react() {
-    // Clear interval as window resize fires,
+    // Clear the timer as window resize fires,
     // so that it only calls adapt() when the
     // user has finished resizing the window.
-    clearInterval(timer);
-    timer = setInterval(adapt, 100);
+    clearTimeout(timer);
+    timer = setTimeout(adapt, 100);
   }
 
   // Do we want to watch for
