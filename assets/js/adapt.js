@@ -65,7 +65,7 @@
       // File name is to the right of "=".
       // Presuppoes a file with no spaces.
       // If no file specified, make empty.
-      file = arr[1] ? arr[1].replace(/\s/g, '') : '';
+      file = arr[1] ? arr[1].replace(/\s/g, '') : undefined;
 
       // Assume min/max if "to" isn't present.
       is_range = arr_0.match('to');
