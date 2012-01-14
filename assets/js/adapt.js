@@ -53,6 +53,9 @@
     var last = range_len - 1;
 
     while (i--) {
+      // Blank if no conditions met.
+      url = '';
+
       // Turn string into array.
       arr = range[i].split('=');
 
@@ -61,8 +64,8 @@
 
       // File name is to the right of "=".
       // Presuppoes a file with no spaces.
-      // If no file specified, assign [i].
-      file = arr[1] ? arr[1].replace(/\s/g, '') : i;
+      // If no file specified, make empty.
+      file = arr[1] ? arr[1].replace(/\s/g, '') : '';
 
       // Assume min/max if "to" isn't present.
       is_range = arr_0.match('to');
@@ -75,13 +78,9 @@
 
       // Check for maxiumum or range.
       if ((!val_2 && i === last && width > val_1) || (width > val_1 && width <= val_2)) {
-        // Built full URL to CSS file.
-        url = path + file;
+        // Build full URL to CSS file.
+        file && (url = path + file);
         break;
-      }
-      else {
-        // Blank if no conditions met.
-        url = '';
       }
     }
 
