@@ -67,7 +67,7 @@
       // If no file specified, make empty.
       file = arr[1] ? arr[1].replace(/\s/g, '') : undefined;
 
-      // Assume min/max if "to" isn't present.
+      // Assume max if "to" isn't present.
       is_range = arr_0.match('to');
 
       // If it's a range, split left/right sides of "to",
@@ -80,6 +80,9 @@
       if ((!val_2 && i === last && width > val_1) || (width > val_1 && width <= val_2)) {
         // Build full URL to CSS file.
         file && (url = path + file);
+
+        // Exit the while loop. No need to continue
+        // if we've already found a matching range.
         break;
       }
     }
@@ -108,6 +111,8 @@
     // so that it only calls adapt() when the
     // user has finished resizing the window.
     clearTimeout(timer);
+
+    // Start the timer countdown.
     timer = setTimeout(adapt, 100);
   }
 
