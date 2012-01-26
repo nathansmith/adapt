@@ -113,7 +113,12 @@
     clearTimeout(timer);
 
     // Start the timer countdown.
-    timer = setTimeout(adapt, 100);
+    timer = setTimeout(adapt, 16);
+    // -----------------------^^
+    // Note: 15.6 milliseconds is lowest "safe"
+    // duration for setTimeout and setInterval.
+    //
+    // http://www.nczonline.net/blog/2011/12/14/timer-resolution-in-browsers
   }
 
   // Do we want to watch for
