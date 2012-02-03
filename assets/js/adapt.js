@@ -24,6 +24,7 @@
   // <link rel="stylesheet" />
   var css = d.createElement('link');
   css.rel = 'stylesheet';
+  css.media = 'screen';
 
   // Called from within adapt().
   function change(i, width) {
