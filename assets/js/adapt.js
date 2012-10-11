@@ -12,7 +12,7 @@
   }
 
   // Empty vars to use later.
-  var url, url_old, timer;
+  var url, url_old, timer, width, i;
 
   // Alias config values.
   var callback = typeof config.callback === 'function' ? config.callback : undefined;
@@ -26,14 +26,25 @@
   css.rel = 'stylesheet';
   css.media = 'screen';
 
+  // Set up the callback to run on css load - will fire every time css.href is updated.
+  if (callback)
+  {
+    css.onload = function() {
+      callback(i, width);
+    };
+  }
+
   // Called from within adapt().
-  function change(i, width) {
+  function change() {
     // Set the URL.
     css.href = url;
     url_old = url;
 
-    // Call callback, if defined.
-    callback && callback(i, width);
+    // Manually run callback if defined and no CSS to load.
+    if (url === '' && callback)
+    {
+      callback(i, width);
+    }
   }
 
   // Adapt to width.
@@ -44,13 +55,13 @@
     clearTimeout(timer);
 
     // Parse browser width.
-    var width = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
+    width = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
 
     // While loop vars.
     var arr, arr_0, val_1, val_2, is_range, file;
 
     // How many ranges?
-    var i = range_len;
+    i = range_len;
     var last = range_len - 1;
 
     while (i--) {
@@ -91,7 +102,7 @@
     // Was it created yet?
     if (!url_old) {
       // Apply changes.
-      change(i, width);
+      change();
 
       // Add the CSS, only if path is defined.
       // Use faster document.head if possible.
@@ -99,7 +110,7 @@
     }
     else if (url_old !== url) {
       // Apply changes.
-      change(i, width);
+      change();
     }
   }
 
