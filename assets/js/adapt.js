@@ -1,3 +1,10 @@
+// JSLint settings:
+/*global
+  ADAPT_CONFIG
+  clearTimeout
+  setTimeout
+*/
+
 /*
   Adapt.js licensed under GPL and MIT.
 
@@ -43,8 +50,8 @@
     // but doesn't do any harm here.
     clearTimeout(timer);
 
-    // Parse browser width.
-    var width = w.innerWidth || d.documentElement.clientWidth || d.body.clientWidth || 0;
+    // Parse viewport width.
+    var width = d.documentElement ? d.documentElement.clientWidth : 0;
 
     // While loop vars.
     var arr, arr_0, val_1, val_2, is_range, file;
