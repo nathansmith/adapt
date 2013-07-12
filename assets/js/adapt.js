@@ -60,10 +60,10 @@
     var i = range_len;
     var last = range_len - 1;
 
-    while (i--) {
-      // Blank if no conditions met.
-      url = '';
+    // Blank if no conditions met or range is empty
+    url = '';
 
+    while (i--) {
       // Turn string into array.
       arr = range[i].split('=');
 
