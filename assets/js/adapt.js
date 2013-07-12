@@ -1,7 +1,7 @@
 // JSLint settings:
 /*global
-  ADAPT_CONFIG
-  clearTimeout
+  ADAPT_CONFIG,
+  clearTimeout,
   setTimeout
 */
 
@@ -22,7 +22,7 @@
   var url, url_old, timer;
 
   // Alias config values.
-  var callback = typeof config.callback === 'function' ? config.callback : undefined;
+  var callback = config.callback || function(){};
   var path = config.path ? config.path : '';
   var range = config.range;
   var range_len = range.length;
@@ -39,8 +39,8 @@
     css.href = url;
     url_old = url;
 
-    // Call callback, if defined.
-    callback && callback(i, width);
+    // Fire callback
+    callback(i, width);
   }
 
   // Adapt to width.
@@ -60,7 +60,7 @@
     var i = range_len;
     var last = range_len - 1;
 
-    // Blank if no conditions met or range is empty
+    // Blank if no conditions met, or range is empty.
     url = '';
 
     while (i--) {
