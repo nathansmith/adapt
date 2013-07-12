@@ -39,7 +39,7 @@
     css.href = url;
     url_old = url;
 
-    // Fire callback
+    // Fire callback.
     callback(i, width);
   }
 
@@ -60,7 +60,7 @@
     var i = range_len;
     var last = range_len - 1;
 
-    // Blank if no conditions met, or range is empty.
+    // Start with blank URL.
     url = '';
 
     while (i--) {
