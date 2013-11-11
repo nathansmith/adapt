@@ -25,6 +25,9 @@
   var callback = config.callback || function(){};
   var path = config.path ? config.path : '';
   var range = config.range;
+  var retina = config.retina;
+  //default to false
+  var excludeIPad = config.excludeIPad ? config.excludeIPad : false;
   var range_len = range.length;
 
   // Create empty link tag:
@@ -32,6 +35,7 @@
   var css = d.createElement('link');
   css.rel = 'stylesheet';
   css.media = 'screen';
+  css.type = 'text/css';
 
   // Called from within adapt().
   function change(i, width) {
@@ -42,6 +46,49 @@
     // Fire callback.
     callback(i, width);
   }
+
+  // From RetinaJS http://www.retinajs.com/
+  function isRetina () {
+    var mediaQuery = "(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx)";
+    if (window.devicePixelRatio > 1) {
+        return true;
+    }
+
+    if (window.matchMedia && window.matchMedia(mediaQuery).matches) {
+        return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Check if retina styles should be excluded even if retina screen is detected based
+   * on additional external configuration rules.
+   * Unfortunately, other mobile tablets don't provide any specific information as I know in the user agent,
+   * so it gets tricky.
+   *
+   * Note: method wrapper is just here to provide ease of overriding
+  **/
+  function shallExclude () {
+    var result = false;
+
+    var iPad = false;
+    if (navigator && navigator.userAgent && navigator.userAgent.toLowerCase().indexOf('ipad') >= 0) {
+        iPad = true;
+    }
+    if (excludeIPad && iPad) {
+        result = true;
+    }
+    return result;
+  }
+
+  /**
+   * Utility function to indicate if retina should be used and requirements are
+   * fulfilled
+  **/
+   function usingRetina () {
+     return retina && isRetina() && !shallExclude();
+   }
 
   // Adapt to width.
   function adapt() {
@@ -63,37 +110,44 @@
     // Start with blank URL.
     url = '';
 
-    while (i--) {
-      // Turn string into array.
-      arr = range[i].split('=');
+    // check if separate parameter for retina displays is provided and display is retina
+    if (usingRetina()) {
+        url = path + retina;
+    } else {
+        while (i--) {
 
-      // Width is to the left of "=".
-      arr_0 = arr[0];
+          // Turn string into array.
+          arr = range[i].split('=');
 
-      // File name is to the right of "=".
-      // Presuppoes a file with no spaces.
-      // If no file specified, make empty.
-      file = arr[1] ? arr[1].replace(/\s/g, '') : undefined;
+          // Width is to the left of "=".
+          arr_0 = arr[0];
 
-      // Assume max if "to" isn't present.
-      is_range = arr_0.match('to');
+          // File name is to the right of "=".
+          // Presuppoes a file with no spaces.
+          // If no file specified, make empty.
+          file = arr[1] ? arr[1].replace(/\s/g, '') : undefined;
 
-      // If it's a range, split left/right sides of "to",
-      // and then convert each one into numerical values.
-      // If it's not a range, turn maximum into a number.
-      val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
-      val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
+          // Assume max if "to" isn't present.
+          is_range = arr_0.match('to');
 
-      // Check for maxiumum or range.
-      if ((!val_2 && i === last && width > val_1) || (width > val_1 && width <= val_2)) {
-        // Build full URL to CSS file.
-        file && (url = path + file);
+          // If it's a range, split left/right sides of "to",
+          // and then convert each one into numerical values.
+          // If it's not a range, turn maximum into a number.
+          val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
+          val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
 
-        // Exit the while loop. No need to continue
-        // if we've already found a matching range.
-        break;
-      }
+          // Check for maxiumum or range.
+          if ((!val_2 && i === last && width > val_1) || (width > val_1 && width <= val_2)) {
+            // Build full URL to CSS file.
+            file && (url = path + file);
+
+            // Exit the while loop. No need to continue
+            // if we've already found a matching range.
+            break;
+          }
+        }
     }
+
 
     // Was it created yet?
     if (!url_old) {
@@ -147,6 +201,16 @@
       w.onresize = react;
     }
   }
+
+  var Adapt = {
+      adapt : adapt,
+      isRetina : isRetina,
+      shallExclude : shallExclude,
+      usingRetina : usingRetina,
+      configuration : config
+  }
+
+  window.Adapt = Adapt;
 
 // Pass in window, document, config, undefined.
 })(this, this.document, ADAPT_CONFIG);
