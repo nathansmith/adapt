@@ -1,4 +1,4 @@
-ADAPT.JS - ADAPTIVE CSS
+ADAPT.JS - ADAPTIVE CSS - 12, 16, and 24 column support; and LTR, RTL
 
 =====
 
