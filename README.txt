@@ -12,8 +12,8 @@ Feel free to use it however you like. :)
 
 =====
 
-Contributor: Adam Wright (Ontario Institute for Cancer Research
-             email: adam.wright@oicr.on.ca
+Contributor: Adam Wright - Ontario Institute for Cancer Research
+             Email: adam.wright@oicr.on.ca
                     adam.j.wright82@gmail.com
 
  - Added 16 and 14 Column Support
