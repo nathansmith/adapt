@@ -100,7 +100,7 @@
       // Apply changes.
       change(i, width);
 
-      // Add the CSS, only if path is defined.
+      // If URL has been defined, add the CSS.
       // Use faster document.head if possible.
       url && (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
     }
