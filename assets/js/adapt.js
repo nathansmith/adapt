@@ -61,7 +61,7 @@
     var last = range_len - 1;
 
     // Start with blank URL.
-    url = '';
+    url = undefined;
 
     while (i--) {
       // Turn string into array.
