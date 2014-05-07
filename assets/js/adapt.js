@@ -102,7 +102,7 @@
 
       // Add the CSS, only if path is defined.
       // Use faster document.head if possible.
-      path && (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
+      url && (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
     }
     else if (url_old !== url) {
       // Apply changes.
