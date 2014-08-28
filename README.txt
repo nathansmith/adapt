@@ -1,4 +1,4 @@
-ADAPT.JS - ADAPTIVE CSS
+ADAPT.JS - ADAPTIVE CSS 
 
 =====
 
@@ -9,6 +9,15 @@ http://adapt.960.gs
 This is dual licensed under GPL and MIT.
 
 Feel free to use it however you like. :)
+
+=====
+
+Contributor: Adam Wright - Ontario Institute for Cancer Research
+             Email: adam.wright@oicr.on.ca
+                    adam.j.wright82@gmail.com
+
+ - Added 16 and 14 Column Support
+ - Added RTL support
 
 =====
 
