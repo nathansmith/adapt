@@ -17,30 +17,30 @@
   if (!config) {
     return;
   }
-
+  
+  // Cache <head> element reference
+  // Use faster document.head if possible.
+  var docHead = (d.head || d.getElementsByTagName('head')[0]);
+  
   // Empty vars to use later.
-  var url, url_old, timer;
+  var url, url_old, timer, css;
 
   // Alias config values.
-  var callback = config.callback || function(){};
-  var path = config.path ? config.path : '';
-  var range = config.range;
-  var range_len = range.length;
-
-  // Create empty link tag:
-  // <link rel="stylesheet" />
-  var css = d.createElement('link');
-  css.rel = 'stylesheet';
-  css.media = 'screen';
+  var callback = config.callback || function(){},
+  	path = config.path ? config.path : '',
+  	range = config.range,
+  	range_len = range.length;
 
   // Called from within adapt().
   function change(i, width) {
     // Set the URL.
     css.href = url;
     url_old = url;
-
-    // Fire callback.
-    callback(i, width);
+    
+    css.onload = function() {
+    	// Fire callback.
+    	callback(i, width);
+    };
   }
 
   // Adapt to width.
@@ -94,19 +94,21 @@
         break;
       }
     }
-
-    // Was it created yet?
-    if (!url_old) {
+    
+    if (url && (!url_old || url_old !== url)) {
+      if(css) {
+        docHead.removeChild(css);
+        css = null;
+      }
+      // Create empty link tag:
+	  // <link rel="stylesheet" />
+	  css = d.createElement('link');
+	  css.rel = 'stylesheet';
+	  css.media = 'screen';
+      
       // Apply changes.
       change(i, width);
-
-      // If URL has been defined, add the CSS.
-      // Use faster document.head if possible.
-      url && (d.head || d.getElementsByTagName('head')[0]).appendChild(css);
-    }
-    else if (url_old !== url) {
-      // Apply changes.
-      change(i, width);
+      docHead.appendChild(css);
     }
   }
 
