@@ -6,9 +6,9 @@
 */
 
 /*
-  Adapt.js licensed under GPL and MIT.
-
-  Read more here: http://adapt.960.gs
+Adapt.js licensed under GPL and MIT.
+Read more here: http://adapt.960.gs
+Version 2.0.0
 */
 
 // Closure.
