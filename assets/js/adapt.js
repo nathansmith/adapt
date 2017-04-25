@@ -12,143 +12,210 @@
 */
 
 // Closure.
-(function(w, d, config, undefined) {
-  // If no config, exit.
-  if (!config) {
-    return;
-  }
-  
-  // Cache <head> element reference
-  // Use faster document.head if possible.
-  var docHead = (d.head || d.getElementsByTagName('head')[0]);
-  
-  // Empty vars to use later.
-  var url, url_old, timer, css;
+(function (w, d, config, undefined) {
+	// If no config, exit.
+	if (!config) {
+		return;
+	}
 
-  // Alias config values.
-  var callback = config.callback || function(){},
-  	path = config.path ? config.path : '',
-  	range = config.range,
-  	range_len = range.length;
+	// Empty vars to use later.
+	var docHead, docBody, bodyClass, url, url_old, timer, css, css_old;
 
-  // Called from within adapt().
-  function change(i, width) {
-    // Set the URL.
-    css.href = url;
-    url_old = url;
-    
-    css.onload = function() {
-    	// Fire callback.
-    	callback(i, width);
-    };
-  }
+	// Alias config values.
+	var callback = config.callback || function () { },
+		path = config.path ? config.path : '',
+		range = config.range,
+		range_len = range.length;
 
-  // Adapt to width.
-  function adapt() {
-    // This clearTimeout is for IE.
-    // Really it belongs in react(),
-    // but doesn't do any harm here.
-    clearTimeout(timer);
+	function setupAdapt() {
+		d.removeEventListener( "DOMContentLoaded", setupAdapt );
 
-    // Parse viewport width.
-    var width = d.documentElement ? d.documentElement.clientWidth : 0;
+		// Cache <head> and <body> element reference
+		// Use faster document.head and document.body if possible.
+		docHead = (d.head || d.getElementsByTagName('head')[0]);
+		docBody = (d.body || d.getElementsByTagName('body')[0]);
+		bodyClass = '';
 
-    // While loop vars.
-    var arr, arr_0, val_1, val_2, is_range, file;
+		// Get existing link tag if cssId was provided
+		if (config.cssId)
+			css = d.getElementById(config.cssId);
 
-    // How many ranges?
-    var i = range_len;
-    var last = range_len - 1;
+		// Fire off once.
+		adapt();
 
-    // Start with blank URL.
-    url = undefined;
+		// Do we want to watch for
+		// resize and device tilt?
+		if (config.dynamic) {
+			// Event listener for window resize,
+			// also triggered by phone rotation.
+			if (w.addEventListener) {
+				// Good browsers.
+				w.addEventListener('resize', react, false);
+			}
+			else if (w.attachEvent) {
+				// Legacy IE support.
+				w.attachEvent('onresize', react);
+			}
+			else {
+				// Old-school fallback.
+				w.onresize = react;
+			}
+		}
+	}
 
-    while (i--) {
-      // Turn string into array.
-      arr = range[i].split('=');
+	// Called from within adapt().
+	function change(i, width, linkElement) {
+		// Set the URL.
+		linkElement.href = url;
+		url_old = url;
 
-      // Width is to the left of "=".
-      arr_0 = arr[0];
+		linkElement.onload = function () {
+			// Remove old css
+			if(css_old) {
+				docHead.removeChild(css_old);
+				css_old = undefined;
+			}
+			// Fire callback.
+			callback(i, width);
+		};
+	}
 
-      // File name is to the right of "=".
-      // Presuppoes a file with no spaces.
-      // If no file specified, make empty.
-      file = arr[1] ? arr[1].replace(/\s/g, '') : undefined;
+	// Adapt to width.
+	function adapt() {
+		// This clearTimeout is for IE.
+		// Really it belongs in react(),
+		// but doesn't do any harm here.
+		clearTimeout(timer);
+		
+		// Remove old css
+		if(css_old) {
+			docHead.removeChild(css_old);
+			css_old = undefined;
+		}
 
-      // Assume max if "to" isn't present.
-      is_range = arr_0.match('to');
+		// Parse viewport width.
+		var width = d.documentElement ? d.documentElement.clientWidth : 0;
 
-      // If it's a range, split left/right sides of "to",
-      // and then convert each one into numerical values.
-      // If it's not a range, turn maximum into a number.
-      val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
-      val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
+		// While loop vars.
+		var arr, arr_0, val_1, val_2, is_range, file;
 
-      // Check for maxiumum or range.
-      if ((!val_2 && i === last && width > val_1) || (width > val_1 && width <= val_2)) {
-        // Build full URL to CSS file.
-        file && (url = path + file);
+		// How many ranges?
+		var i = range_len;
+		var last = range_len - 1;
 
-        // Exit the while loop. No need to continue
-        // if we've already found a matching range.
-        break;
-      }
-    }
-    
-    if (url && (!url_old || url_old !== url)) {
-      if(css) {
-        docHead.removeChild(css);
-        css = null;
-      }
-      // Create empty link tag:
-	  // <link rel="stylesheet" />
-	  css = d.createElement('link');
-	  css.rel = 'stylesheet';
-	  css.media = 'screen';
-      
-      // Apply changes.
-      change(i, width);
-      docHead.appendChild(css);
-    }
-  }
+		// Start with blank URL.
+		url = undefined;
 
-  // Fire off once.
-  adapt();
+		while (i--) {
 
-  // Slight delay.
-  function react() {
-    // Clear the timer as window resize fires,
-    // so that it only calls adapt() when the
-    // user has finished resizing the window.
-    clearTimeout(timer);
+			// Find first occurance of "=".
+			equalPos = range[i].indexOf('=');
 
-    // Start the timer countdown.
-    timer = setTimeout(adapt, 16);
-    // -----------------------^^
-    // Note: 15.6 milliseconds is lowest "safe"
-    // duration for setTimeout and setInterval.
-    //
-    // http://www.nczonline.net/blog/2011/12/14/timer-resolution-in-browsers
-  }
+			// Width is to the left of "=".
+			arr_0 = range[i].substr(0, equalPos);
 
-  // Do we want to watch for
-  // resize and device tilt?
-  if (config.dynamic) {
-    // Event listener for window resize,
-    // also triggered by phone rotation.
-    if (w.addEventListener) {
-      // Good browsers.
-      w.addEventListener('resize', react, false);
-    }
-    else if (w.attachEvent) {
-      // Legacy IE support.
-      w.attachEvent('onresize', react);
-    }
-    else {
-      // Old-school fallback.
-      w.onresize = react;
-    }
-  }
+			// File name is to the right of "=".
+			// Presuppoes a file with no spaces.
+			// If no file specified, make empty.
+			file = range[i].substr(equalPos+1);
+			file = file ? file.replace(/\s/g, '') : undefined;
 
-// Pass in window, document, config, undefined.
+			// Assume max if "to" isn't present.
+			is_range = arr_0.match('to');
+
+			// If it's a range, split left/right sides of "to",
+			// and then convert each one into numerical values.
+			// If it's not a range, turn maximum into a number.
+			val_1 = is_range ? parseInt(arr_0.split('to')[0], 10) : parseInt(arr_0, 10);
+			val_2 = is_range ? parseInt(arr_0.split('to')[1], 10) : undefined;
+
+			// Check for maxiumum or range.
+			if ((!val_2 && i === last && width > val_1) || (width > val_1 && width <= val_2)) {
+				// Build full URL to CSS file.
+				file && (url = path + file);
+
+				// Exit the while loop. No need to continue
+				// if we've already found a matching range.
+				break;
+			}
+		}
+		
+		// Update css link tag, only if css url has changed
+		if (url && (!url_old || url_old !== url)) {
+			if (css) {
+				if(css.href !== url) {
+					// Create empty link tag:
+					// <link rel="stylesheet" />
+					var newCss = d.createElement('link');
+					newCss.rel = 'stylesheet';
+					newCss.media = css.media;
+					newCss.id = css.id;
+					// Apply changes.
+					change(i, width, newCss);
+					
+					// Prevent overflowing flash of content
+					css_old = css;
+					css_old.id += '_old'; //Prevent duplicate IDs
+					
+					// Preserve css load order with graceful content stepping
+					if(css.nextSibling)
+						docHead.insertBefore(newCss, css.nextSibling);
+					else
+						docHead.appendChild(newCss);
+					css = newCss;
+				} else {
+					// Fire callback even if css link element wasn't changed.
+					url_old = url;
+					callback(i, width);
+				}
+			} else {
+				// Create empty link tag:
+				// <link rel="stylesheet" />
+				css = d.createElement('link');
+				css.rel = 'stylesheet';
+				css.media = 'screen';
+				// Apply changes.
+				change(i, width, css);
+
+				// Append css to end of head
+				docHead.appendChild(css);
+			}
+		}
+
+		// Update css body class
+		// Remove bodyClass
+		if (bodyClass.length && docBody.classList.contains(bodyClass))
+			docBody.classList.remove(bodyClass);
+
+		bodyClass = '_' + css.href.split('/').pop().split('.')[0];
+			
+		// Add bodyClass
+		docBody.classList.add(bodyClass);
+	}
+
+	// Slight delay.
+	function react() {
+		// Clear the timer as window resize fires,
+		// so that it only calls adapt() when the
+		// user has finished resizing the window.
+		clearTimeout(timer);
+
+		// Start the timer countdown.
+		timer = setTimeout(adapt, 16);
+		// -----------------------^^
+		// Note: 15.6 milliseconds is lowest "safe"
+		// duration for setTimeout and setInterval.
+		//
+		// http://www.nczonline.net/blog/2011/12/14/timer-resolution-in-browsers
+	}
+	
+	// Setup adapt after DOM is loaded
+	if ( d.readyState === "complete" ||
+		( d.readyState !== "loading" && !d.documentElement.doScroll ) ) {
+		setupAdapt();
+	} else {
+		d.addEventListener( "DOMContentLoaded", setupAdapt );
+	}
+
+	// Pass in window, document, config, undefined.
 })(this, this.document, ADAPT_CONFIG);
