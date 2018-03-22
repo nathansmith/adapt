@@ -6,9 +6,9 @@
 */
 
 /*
-Adapt.js licensed under GPL and MIT.
-Read more here: http://adapt.960.gs
-Version 2.0.0
+  Adapt.js licensed under GPL and MIT.
+
+  Read more here: http://adapt.960.gs
 */
 
 // Closure.
@@ -180,17 +180,17 @@ Version 2.0.0
 				// Append css to end of head
 				docHead.appendChild(css);
 			}
+
+			// Update css body class
+			// Remove bodyClass
+			if (bodyClass.length && docBody.classList.contains(bodyClass))
+				docBody.classList.remove(bodyClass);
+
+			bodyClass = '_' + css.href.split('/').pop().split('.')[0];
+				
+			// Add bodyClass
+			docBody.classList.add(bodyClass);
 		}
-
-		// Update css body class
-		// Remove bodyClass
-		if (bodyClass.length && docBody.classList.contains(bodyClass))
-			docBody.classList.remove(bodyClass);
-
-		bodyClass = '_' + css.href.split('/').pop().split('.')[0];
-			
-		// Add bodyClass
-		docBody.classList.add(bodyClass);
 	}
 
 	// Slight delay.
@@ -201,12 +201,10 @@ Version 2.0.0
 		clearTimeout(timer);
 
 		// Start the timer countdown.
-		timer = setTimeout(adapt, 16);
+		timer = setTimeout(adapt, 20);
 		// -----------------------^^
-		// Note: 15.6 milliseconds is lowest "safe"
+		// Note: 20 milliseconds is lowest "safe"
 		// duration for setTimeout and setInterval.
-		//
-		// http://www.nczonline.net/blog/2011/12/14/timer-resolution-in-browsers
 	}
 	
 	// Setup adapt after DOM is loaded
