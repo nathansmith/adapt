@@ -43,6 +43,16 @@
 		// Fire off once.
 		adapt();
 
+		// Clean up any preexisting body classes
+		var classesToRemove = [];
+		for (var i = 0; i < docBody.classList.length; i++) {
+			if( docBody.classList[i].charAt(0) == '_' && docBody.classList[i] != bodyClass )
+				classesToRemove[classesToRemove.length] = docBody.classList[i];
+		}
+		for (var i = 0; i < classesToRemove.length; i++) {
+			docBody.classList.remove(classesToRemove[i]);
+		}
+
 		// Do we want to watch for
 		// resize and device tilt?
 		if (config.dynamic) {
@@ -140,56 +150,59 @@
 			}
 		}
 		
-		// Update css link tag, only if css url has changed
-		if (url && (!url_old || url_old !== url)) {
-			if (css) {
-				if(css.href !== url) {
+		if (url) {
+			// Update css link tag, only if css url has changed
+			if(!url_old || url_old !== url) {
+				if (css) {
+					if(css.href !== url) {
+						// Create empty link tag:
+						// <link rel="stylesheet" />
+						var newCss = d.createElement('link');
+						newCss.rel = 'stylesheet';
+						newCss.media = css.media;
+						newCss.id = css.id;
+						// Apply changes.
+						change(i, width, newCss);
+						
+						// Prevent overflowing flash of content
+						css_old = css;
+						css_old.id += '_old'; //Prevent duplicate IDs
+						
+						// Preserve css load order with graceful content stepping
+						if(css.nextSibling)
+							docHead.insertBefore(newCss, css.nextSibling);
+						else
+							docHead.appendChild(newCss);
+						css = newCss;
+					} else {
+						// Fire callback even if css link element wasn't changed.
+						url_old = url;
+						callback(i, width);
+					}
+				} else {
 					// Create empty link tag:
 					// <link rel="stylesheet" />
-					var newCss = d.createElement('link');
-					newCss.rel = 'stylesheet';
-					newCss.media = css.media;
-					newCss.id = css.id;
+					css = d.createElement('link');
+					css.rel = 'stylesheet';
+					css.media = 'screen';
 					// Apply changes.
-					change(i, width, newCss);
-					
-					// Prevent overflowing flash of content
-					css_old = css;
-					css_old.id += '_old'; //Prevent duplicate IDs
-					
-					// Preserve css load order with graceful content stepping
-					if(css.nextSibling)
-						docHead.insertBefore(newCss, css.nextSibling);
-					else
-						docHead.appendChild(newCss);
-					css = newCss;
-				} else {
-					// Fire callback even if css link element wasn't changed.
-					url_old = url;
-					callback(i, width);
-				}
-			} else {
-				// Create empty link tag:
-				// <link rel="stylesheet" />
-				css = d.createElement('link');
-				css.rel = 'stylesheet';
-				css.media = 'screen';
-				// Apply changes.
-				change(i, width, css);
+					change(i, width, css);
 
-				// Append css to end of head
-				docHead.appendChild(css);
+					// Append css to end of head
+					docHead.appendChild(css);
+				}
 			}
 
-			// Update css body class
-			// Remove bodyClass
-			if (bodyClass.length && docBody.classList.contains(bodyClass))
-				docBody.classList.remove(bodyClass);
-
-			bodyClass = '_' + css.href.split('/').pop().split('.')[0];
-				
-			// Add bodyClass
-			docBody.classList.add(bodyClass);
+			// Update css body class if it has changed
+			var newBodyClass = '_' + url.split('/').pop().split('.')[0];
+			if( newBodyClass != bodyClass ) {
+				// Remove bodyClass
+				if (bodyClass.length && docBody.classList.contains(bodyClass))
+					docBody.classList.remove(bodyClass);
+				bodyClass = newBodyClass;
+				// Add bodyClass
+				docBody.classList.add(bodyClass);
+			}
 		}
 	}
 
