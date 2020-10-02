@@ -2,9 +2,8 @@ ADAPT.JS - ADAPTIVE CSS
 
 =====
 
-For more information, see...
-
-http://adapt.960.gs
+For more information go through...
+"http://adapt.960.gs"
 
 This is dual licensed under GPL and MIT.
 
